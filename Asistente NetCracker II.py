@@ -128,6 +128,108 @@ def crearCEC(ncaja):
         (By.XPATH, '/html/body/div[4]/div[1]/div[1]/div[1]/div/a[8]/span[1]'))).click()
 # --------------------------------------------------------------------------
 
+
+# -------------------- CREAR CAJA CES --------------------------------------
+
+
+def crearCES(ncaja):
+    print("Crea la caja CES -", ncaja)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="9153536506213318087"]'))).click()
+    time.sleep(1)
+
+    # ---------- koc / SSC2806-SM-8 / SPLICE ----------------
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="title"]'))).send_keys("KOC8/16")
+    time.sleep(0)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="main_window"]/tbody/tr[7]/td/div[2]/div/a'))).click()
+    time.sleep(1)
+
+    """
+    #---------------------- Link directo al resultado de buscar el tipo de caja pero toma otra referencia y no el ID --------------------- 
+        driver.get("http://netcracker.telecentro.net.ar/common/uedit.jsp?parent=9165226387213207226&class=301&return=%2Fcommon%2Fuobject.jsp%3FisDefaultTab%3Dtrue%26tab%3Dsites_and_devices%26id%3D9165226387213207226%26object%3D9165226387213207226%26ctrl%3Dt9153483960513284291_0&attr=9153536506213318087&types=301&tab=repository&tab=template&tab=repository&title=SSC2806-SM-8&createnew=1&otype=301&reposprj=1091347815013411785&tab=repository&tab=template&tab=repository&lookin=301&types=301&class=301&search=1")
+        time.sleep(50)
+    #--------------------------------------------------------------------------------------------------------
+    """
+    # crear la CES
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]')))
+    driver.find_element(
+        by="xpath", value='//*[@id="xnewname"]').clear()
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]'))).send_keys("CES-"+ncaja)
+    time.sleep(0)
+    dropdwn = driver.find_element(
+        By.XPATH, '/html/body/div[4]/div[1]/div[2]/div/form/table/tbody/tr/td/table[3]/tbody/tr[10]/td[2]/span/table/tbody/tr/td/div/select')
+    dd = Select(dropdwn)
+    dd.select_by_value("9157892687313570129")
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="search_window"]/tbody/tr[11]/td/div[1]/div/a'))).click()
+
+    # Pestaña Slots
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id = "id_tab_2"]/a'))).click()
+    time.sleep(1)
+
+    # insertar Splitter para interconectar las cajas ----------------------------------------------
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="s_t"]/tbody/tr[1]/td[1]/label/input'))).click()
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="7103060739013917222"]'))).click()
+    time.sleep(1)
+
+    # Insertar Card
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="card1"]'))).click()
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="create_bt_id"]'))).click()
+    time.sleep(1)
+
+    # insertar Splitter para los clientes   ------------------------------------------------------
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="s_t"]/tbody/tr[4]/td[1]/label/input'))).click()
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="7103060739013917222"]'))).click()
+    time.sleep(1)
+
+    # Insertar Card
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="card1"]'))).click()
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="create_bt_id"]'))).click()
+    time.sleep(1)
+
+    # Configurar Splitter
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="s_t"]/tbody/tr[4]/td[3]/a/span'))).click()
+    time.sleep(1)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="id_tab_9"]/a'))).click()  # pestaña Parametros
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="pcEdit"]'))).click()
+    time.sleep(1)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '/html/body/div[4]/div[1]/div[2]/div/div/form/table/tbody/tr/td/table[3]/tbody[8]/tr/td[2]/span/table/tbody/tr/td/textarea'))).send_keys('{\n"version":1,\n"servicios":[\n{\n"pisos": "Todos",\n"departamentos": "todos",\n"descripcionCaja": "CES-'+ncaja+'",\n"destinoPuertos":[\n{\n"1":"1",\n"2":"2",\n"3":"3",\n"4":"4",\n"5":"5",\n"6":"6",\n"7":"7",\n"8":"8"\n}\n]\n}\n]\n}\n')
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="theform_update"]'))).click()
+    time.sleep(1)
+
+    # volver al home ID
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '/html/body/div[4]/div[1]/div[1]/div[1]/div/a[8]/span[1]'))).click()
+# --------------------------------------------------------------------------
+
 # ---------------------------------------------------------------------------------------------
 
 
@@ -148,7 +250,7 @@ wait = WebDriverWait(driver, 10)
 
 # ------------------------------- CICLO PRINCIPAL -----------------
 
-def principal(numeroid, numerocaja1, numerocaja2, numerocaja3):
+def principal(numeroid, numerocaja1, numerocaja2, numerocaja3, numerocaja4, numerocaja5, numeroces1):
     print("Campo texto ID", numeroid)
     print("Campo texto CAJA1", numerocaja1)
     print("Campo texto CAJA2", numerocaja2)
@@ -166,7 +268,7 @@ def principal(numeroid, numerocaja1, numerocaja2, numerocaja3):
             by="xpath", value='/html/body/div[4]/div[1]/div[2]/div/table/tbody/tr/td[2]/font/div')))
         label1 = Label(ventana, text="El ID no se encuentra cargado en NC")
         label1.place(x=120, y=320)
-        driver.quit()
+        # driver.quit()
     else:
         print("Si se encuentra el ID", len(driver.find_elements(
             by="xpath", value='/html/body/div[4]/div[1]/div[2]/div/table/tbody/tr/td[2]/font/div')))
@@ -188,7 +290,19 @@ def principal(numeroid, numerocaja1, numerocaja2, numerocaja3):
             print("entro en: 3")
             crearCEC(numerocaja3)
 
+        if (numerocaja4 != ""):
+            print("entro en: 2")
+            crearCEC(numerocaja4)
+
+        if (numerocaja5 != ""):
+            print("entro en: 3")
+            crearCEC(numerocaja5)
+
         # -------- Crea las cajas CES -----------------
+
+        if (numeroces1 != ""):
+            print("entro en: 1")
+            crearCES(numeroces1)
 
         time.sleep(10)
 
@@ -243,6 +357,16 @@ etiqueta4.place(x=40, y=210)
 inCAJA3 = Entry(ventana, font="20", width=3)
 inCAJA3.place(x=70, y=210)
 
+etiqueta5 = Label(ventana, text="CEC-")
+etiqueta5.place(x=40, y=240)
+inCAJA4 = Entry(ventana, font="20", width=3)
+inCAJA4.place(x=70, y=240)
+
+etiqueta6 = Label(ventana, text="CEC-")
+etiqueta6.place(x=40, y=270)
+inCAJA5 = Entry(ventana, font="20", width=3)
+inCAJA5.place(x=70, y=270)
+
 # ---------------- Cajas CES ----------------------------
 
 etiquetaCES = Label(ventana, text="Ingrese el Nro de la CAJA CES")
@@ -265,14 +389,60 @@ inCAJACES3.place(x=280, y=210)
 
 
 boton1 = Button(ventana, text="GENERAR", font=("Tahoma", 12), fg="#FFFFFF", bg="#008f39",
-                padx=30, pady=15, command=lambda: principal(inID.get(), inCAJA1.get(), inCAJA2.get(), inCAJA3.get()))
-boton1.place(x=120, y=280)
+                padx=30, pady=15, command=lambda: principal(inID.get(), inCAJA1.get(), inCAJA2.get(), inCAJA3.get(), inCAJA4.get(), inCAJA5.get(), inCAJACES1.get()))
+boton1.place(x=120, y=320)
 ventana.mainloop()
 
 # ---------------------------------------------------------------------------------------------
 # ------------------------------------
 """
+para las montantes
 
+def crearCES(ncaja):
+    print("Crea la caja CES -", ncaja)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="9153536506213318087"]'))).click()
+    time.sleep(1)
+
+    # ---------- koc / SSC2806-SM-8 / SPLICE ----------------
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="title"]'))).send_keys("Splice Closure-48/60")
+    time.sleep(0)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="main_window"]/tbody/tr[7]/td/div[2]/div/a'))).click()
+    time.sleep(1)
+   
+    # crear la CES
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]')))
+    driver.find_element(
+        by="xpath", value='//*[@id="xnewname"]').clear()
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]'))).send_keys("CES-"+ncaja)
+    time.sleep(0)
+    dropdwn = driver.find_element(
+        By.XPATH, '/html/body/div[4]/div[1]/div[2]/div/form/table/tbody/tr/td/table[3]/tbody/tr[10]/td[2]/span/table/tbody/tr/td/div/select')
+    dd = Select(dropdwn)
+    dd.select_by_value("9157892687313570128")
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="search_window"]/tbody/tr[11]/td/div[1]/div/a'))).click()
+
+    # Pestaña Device
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="id_tab_3"]/a'))).click()
+    time.sleep(1)
+
+    # insertar Splitter
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="s_t"]/tbody/tr/td[1]/label/input'))).click()
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="7103060739013917222"]'))).click()
+    time.sleep(1)
 
 
 
