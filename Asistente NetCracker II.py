@@ -1,24 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support.ui import Select
-#from selenium.webdriver.support.select import Select
-from selenium.webdriver import ActionChains
-from bs4 import BeautifulSoup
-
+import datetime
+import re
+import time
 from tkinter import *
 
 import pandas as pd
-
-import re
-
-
-import datetime
-import time
-
+from bs4 import BeautifulSoup
+from selenium import webdriver
+#from selenium.webdriver.support.select import Select
+from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.wait import WebDriverWait
 
 # -------------------------------------------- Funciones ------------------------------------
 
@@ -33,9 +28,9 @@ def loggin(n_id):
     driver.get("http://netcracker.telecentro.net.ar/login.jsp")
     time.sleep(2)
     wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="user"]'))).send_keys("cchirinos")
+        (By.XPATH, '//*[@id="user"]'))).send_keys(user)
     wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="pass"]'))).send_keys("Martes1001")
+        (By.XPATH, '//*[@id="pass"]'))).send_keys(clave)
     wait.until(EC.element_to_be_clickable(
         (By.XPATH, '//*[@id="login_button"]/div/input'))).click()
     time.sleep(1)
@@ -234,7 +229,7 @@ def crearCES(ncaja):
 
 
 # -------------------------------------------- VARIABLES ------------------------------------
-#ID = "1408470"
+#ID = "1340676"
 
 path = "/chromedriver.exe"
 Service = Service(executable_path=path)
@@ -247,8 +242,15 @@ wait = WebDriverWait(driver, 10)
 #input1 = input("Ingrese el ID")
 #ID = input1
 
+with open("Credenciales.txt", mode="r") as archivo:
+    credenciales = archivo.readline().strip().split(",")
+    user = credenciales[0].strip()
+    clave = credenciales[1].strip()
+    print("Usuario ", user)
+    print("Contraseña ", clave)
 
 # ------------------------------- CICLO PRINCIPAL -----------------
+
 
 def principal(numeroid, numerocaja1, numerocaja2, numerocaja3, numerocaja4, numerocaja5, numeroces1):
     print("Campo texto ID", numeroid)
@@ -267,9 +269,12 @@ def principal(numeroid, numerocaja1, numerocaja2, numerocaja3, numerocaja4, nume
         print("No se encuentra el ID", len(driver.find_elements(
             by="xpath", value='/html/body/div[4]/div[1]/div[2]/div/table/tbody/tr/td[2]/font/div')))
         label1 = Label(ventana, text="El ID no se encuentra cargado en NC")
-        label1.place(x=120, y=320)
+        label1.place(x=80, y=320)
         # driver.quit()
     else:
+        # Borra el mensaje de que no esta cargado en NC
+        label1 = Label(ventana, text="")
+        label1.place(x=80, y=320)
         print("Si se encuentra el ID", len(driver.find_elements(
             by="xpath", value='/html/body/div[4]/div[1]/div[2]/div/table/tbody/tr/td[2]/font/div')))
 
