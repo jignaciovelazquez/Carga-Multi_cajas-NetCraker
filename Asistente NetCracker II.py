@@ -558,53 +558,7 @@ ventana.mainloop()
 # ---------------------------------------------------------------------------------------------
 # ------------------------------------
 """
-para las montantes
 
-def crearCES(ncaja):
-    print("Crea la caja CES -", ncaja)
-
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="9153536506213318087"]'))).click()
-    time.sleep(1)
-
-    # ---------- koc / SSC2806-SM-8 / SPLICE ----------------
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="title"]'))).send_keys("Splice Closure-48/60")
-    time.sleep(0)
-
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="main_window"]/tbody/tr[7]/td/div[2]/div/a'))).click()
-    time.sleep(1)
-   
-    # crear la CES
-
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="xnewname"]')))
-    driver.find_element(
-        by="xpath", value='//*[@id="xnewname"]').clear()
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="xnewname"]'))).send_keys("CES-"+ncaja)
-    time.sleep(0)
-    dropdwn = driver.find_element(
-        By.XPATH, '/html/body/div[4]/div[1]/div[2]/div/form/table/tbody/tr/td/table[3]/tbody/tr[10]/td[2]/span/table/tbody/tr/td/div/select')
-    dd = Select(dropdwn)
-    dd.select_by_value("9157892687313570128")
-    time.sleep(0)
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="search_window"]/tbody/tr[11]/td/div[1]/div/a'))).click()
-
-    # Pestaña Device
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="id_tab_3"]/a'))).click()
-    time.sleep(1)
-
-    # insertar Splitter
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="s_t"]/tbody/tr/td[1]/label/input'))).click()
-    time.sleep(0)
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, '//*[@id="7103060739013917222"]'))).click()
-    time.sleep(1)
 
 
 
