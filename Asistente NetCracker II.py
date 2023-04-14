@@ -1,6 +1,7 @@
 import datetime
 import re
 import time
+import os
 from tkinter import *
 
 import pandas as pd
@@ -225,6 +226,103 @@ def crearCES(ncaja):
         (By.XPATH, '/html/body/div[4]/div[1]/div[1]/div[1]/div/a[8]/span[1]'))).click()
 # --------------------------------------------------------------------------
 
+# -------------------- CREAR SPLITTER --------------------------------------
+
+
+def crearSPLITTER(nsplitter):
+    print("Crea la caja SPLITTER -", nsplitter)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="9152095284113540466"]'))).click()
+    time.sleep(1)
+
+    # ---------- Splice Closure Optical Splitter 1:8 (SC/APC) ----------------
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="title"]'))).send_keys("Splice Closure Optical Splitter 1:8 (SC/APC)")
+    time.sleep(0)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="main_window"]/tbody/tr[7]/td/div[2]/div/a'))).click()
+    time.sleep(1)
+
+    # crear el splitter
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]')))
+    driver.find_element(
+        by="xpath", value='//*[@id="xnewname"]').clear()
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]'))).send_keys("Splice Closure Optical Splitter 1:8 (SC/APC)#"+nsplitter.upper())
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="search_window"]/tbody/tr[11]/td/div[1]/div/a'))).click()
+    time.sleep(1)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '/html/body/div[4]/div[1]/div[1]/div[1]/div/a[9]/span[1]'))).click()
+    time.sleep(1)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="id_tab_3"]/a'))).click()
+    time.sleep(1)
+
+
+# -------------------- CREAR CAJA CEP --------------------------------------
+
+def crearCEP(ncaja, splitter1, splitter2, splitter3, splitter4, splitter5):
+    print("Crea la caja CEP -", ncaja)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="9153536506213318087"]'))).click()
+    time.sleep(1)
+
+    # ---------- koc / SSC2806-SM-8 / SPLICE ----------------
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="title"]'))).send_keys("Splice Closure-48/60")
+    time.sleep(0)
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="main_window"]/tbody/tr[7]/td/div[2]/div/a'))).click()
+    time.sleep(1)
+
+    # crear la CEP
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]')))
+    driver.find_element(
+        by="xpath", value='//*[@id="xnewname"]').clear()
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="xnewname"]'))).send_keys("CEP-"+ncaja)
+    time.sleep(0)
+    dropdwn = driver.find_element(
+        By.XPATH, '/html/body/div[4]/div[1]/div[2]/div/form/table/tbody/tr/td/table[3]/tbody/tr[10]/td[2]/span/table/tbody/tr/td/div/select')
+    dd = Select(dropdwn)
+    dd.select_by_value("9157892687313570128")
+    time.sleep(0)
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="search_window"]/tbody/tr[11]/td/div[1]/div/a'))).click()
+
+    # Pestaña Device
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '//*[@id="id_tab_3"]/a'))).click()
+    time.sleep(1)
+
+    # insertar Splitter
+
+    if (splitter1 != ""):
+        crearSPLITTER(splitter1)
+    if (splitter2 != ""):
+        crearSPLITTER(splitter2)
+    if (splitter3 != ""):
+        crearSPLITTER(splitter3)
+    if (splitter4 != ""):
+        crearSPLITTER(splitter4)
+    if (splitter5 != ""):
+        crearSPLITTER(splitter5)
+
+    # volver al home ID
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, '/html/body/div[4]/div[1]/div[1]/div[1]/div/a[8]/span[1]'))).click()
+# --------------------------------------------------------------------------
+
 # ---------------------------------------------------------------------------------------------
 
 
@@ -252,7 +350,7 @@ with open("Credenciales.txt", mode="r") as archivo:
 # ------------------------------- CICLO PRINCIPAL -----------------
 
 
-def principal(numeroid, numerocaja1, numerocaja2, numerocaja3, numerocaja4, numerocaja5, numeroces1):
+def principal(numeroid, numerocaja1, numerocaja2, numerocaja3, numerocaja4, numerocaja5, numeroces1, numeroces2, numeroces3, numerocep1, numerosplitter11, numerosplitter12, numerosplitter13, numerosplitter14, numerosplitter15, numerocep2, numerosplitter21, numerosplitter22, numerosplitter23, numerosplitter24, numerosplitter25):
     print("Campo texto ID", numeroid)
     print("Campo texto CAJA1", numerocaja1)
     print("Campo texto CAJA2", numerocaja2)
@@ -309,7 +407,27 @@ def principal(numeroid, numerocaja1, numerocaja2, numerocaja3, numerocaja4, nume
             print("entro en: 1")
             crearCES(numeroces1)
 
-        time.sleep(10)
+        if (numeroces2 != ""):
+            print("entro en: 1")
+            crearCES(numeroces2)
+
+        if (numeroces3 != ""):
+            print("entro en: 1")
+            crearCES(numeroces3)
+
+        # -------- Crea las cajas CEP -----------------
+
+        if (numerocep1 != ""):
+            print("entro en: 1")
+            crearCEP(numerocep1, numerosplitter11, numerosplitter12,
+                     numerosplitter13, numerosplitter14, numerosplitter15)
+
+        if (numerocep2 != ""):
+            print("entro en: 1")
+            crearCEP(numerocep2, numerosplitter21, numerosplitter22,
+                     numerosplitter23, numerosplitter24, numerosplitter25)
+
+        time.sleep(1)
 
     # -------------------------------Bandeja de Cierre de Relevamiento-----
     print("Fin")
@@ -322,7 +440,7 @@ def principal(numeroid, numerocaja1, numerocaja2, numerocaja3, numerocaja4, nume
 
 # ---------------------------------------- INTERFAZ VENTANA -----------------------------------
 ventana = Tk()
-ventana.geometry("400x500")
+ventana.geometry("400x550")
 ventana.title("NetCracker")
 
 
@@ -392,10 +510,49 @@ etiqueta12.place(x=250, y=210)
 inCAJACES3 = Entry(ventana, font="20", width=3)
 inCAJACES3.place(x=280, y=210)
 
+# ---------------- Cajas CEP ----------------------------
+
+etiquetaCEP = Label(ventana, text="Ingrese el Nro de la CAJA CEP")
+etiquetaCEP.place(x=20, y=310)
+
+etiqueta20 = Label(ventana, text="CEP-")
+etiqueta20.place(x=40, y=340)
+inCAJACEP1 = Entry(ventana, font="20", width=3)
+inCAJACEP1.place(x=70, y=340)
+etiqueta30 = Label(ventana, text="SPLITTER-")
+etiqueta30.place(x=120, y=340)
+inCAJASPLITTER11 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER11.place(x=180, y=340)
+inCAJASPLITTER12 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER12.place(x=220, y=340)
+inCAJASPLITTER13 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER13.place(x=260, y=340)
+inCAJASPLITTER14 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER14.place(x=300, y=340)
+inCAJASPLITTER15 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER15.place(x=340, y=340)
+
+etiqueta21 = Label(ventana, text="CEP-")
+etiqueta21.place(x=40, y=370)
+inCAJACEP2 = Entry(ventana, font="20", width=3)
+inCAJACEP2.place(x=70, y=370)
+etiqueta31 = Label(ventana, text="SPLITTER-")
+etiqueta31.place(x=120, y=370)
+inCAJASPLITTER21 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER21.place(x=180, y=370)
+inCAJASPLITTER22 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER22.place(x=220, y=370)
+inCAJASPLITTER23 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER23.place(x=260, y=370)
+inCAJASPLITTER24 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER24.place(x=300, y=370)
+inCAJASPLITTER25 = Entry(ventana, font="20", width=3)
+inCAJASPLITTER25.place(x=340, y=370)
+
 
 boton1 = Button(ventana, text="GENERAR", font=("Tahoma", 12), fg="#FFFFFF", bg="#008f39",
-                padx=30, pady=15, command=lambda: principal(inID.get(), inCAJA1.get(), inCAJA2.get(), inCAJA3.get(), inCAJA4.get(), inCAJA5.get(), inCAJACES1.get()))
-boton1.place(x=120, y=320)
+                padx=30, pady=15, command=lambda: principal(inID.get(), inCAJA1.get(), inCAJA2.get(), inCAJA3.get(), inCAJA4.get(), inCAJA5.get(), inCAJACES1.get(), inCAJACES2.get(), inCAJACES3.get(), inCAJACEP1.get(), inCAJASPLITTER11.get(), inCAJASPLITTER12.get(), inCAJASPLITTER13.get(), inCAJASPLITTER14.get(), inCAJASPLITTER15.get(), inCAJACEP2.get(), inCAJASPLITTER21.get(), inCAJASPLITTER22.get(), inCAJASPLITTER23.get(), inCAJASPLITTER24.get(), inCAJASPLITTER25.get()))
+boton1.place(x=120, y=450)
 ventana.mainloop()
 
 # ---------------------------------------------------------------------------------------------
