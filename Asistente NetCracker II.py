@@ -329,7 +329,7 @@ def crearCEP(ncaja, splitter1, splitter2, splitter3, splitter4, splitter5):
 # -------------------------------------------- VARIABLES ------------------------------------
 #ID = "1340676"
 
-path = "/chromedriver.exe"
+path = r"C:\Users\jvelazquez\Documents\OneDriveJV\OneDrive\PROGRAMACION\PYTHON\Asistente NetCracker\Carga Cajas Exterior NetCracker\chromedriver.exe"
 Service = Service(executable_path=path)
 driver = webdriver.Chrome(service=Service)
 wait = WebDriverWait(driver, 10)
